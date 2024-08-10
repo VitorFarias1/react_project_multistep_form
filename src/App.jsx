@@ -4,6 +4,7 @@ import ReviewForm from './components/ReviewForm';
 import Thanks from './components/Thanks';
 
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
+import { FiSend } from 'react-icons/fi';
 
 // Hooks
 import { useForm } from './hooks/useForm';
@@ -13,27 +14,32 @@ import './App.css'
 function App() {
   const formComponents = [<UserForm />, <ReviewForm />, <Thanks />];
 
-  const {currentStep, currentComponent} = useForm(formComponents)
+  const {currentStep, currentComponent, changeStep, isLastStep, isFirstStep} = useForm(formComponents)
 
   return (
-    <div className='App'>
+    <div className='app'>
       <div className='header'>
-        <h2>Deixe sua avaliação</h2>
+        <h2>Deixe a sua avaliação</h2>
         <p>Ficamos felizes com a sua compra, utilize o formulário abaixo para avaliar o produto</p>
       </div>
       <div className='form-container'>
         <p>Etapas</p>
-        <form>
+        <form onSubmit={(e) => changeStep(currentStep + 1, e)}> 
           <div className="inputs-container">{currentComponent}</div>
           <div className="action">
-            <button type="button">
+           {!isFirstStep && ( 
+            <button type="button" onClick={() => changeStep(currentStep - 1)}>
               <GrFormPrevious />
               <span>Voltar</span>
-            </button>
-            <button type="submit">
+            </button>)}
+            {!isLastStep ? (<button type="submit">
               <span>Avançar</span>
               <GrFormNext />
-            </button>
+            </button>) : (
+              <button type="button">
+              <span>Enviar</span>
+              <FiSend />
+            </button>)} 
           </div>
         </form>
       </div>
