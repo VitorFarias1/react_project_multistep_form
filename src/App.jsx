@@ -8,12 +8,32 @@ import { FiSend } from 'react-icons/fi';
 
 // Hooks
 import { useForm } from './hooks/useForm';
-
-import './App.css'
 import Steps from './components/Steps';
 
+import { useState } from 'react';
+
+import './App.css'
+
+
 function App() {
-  const formComponents = [<UserForm />, <ReviewForm />, <Thanks />];
+
+  const formTemplate = {
+    name: "",
+    email: "",
+    review: "",
+    comment: "",
+
+  }
+
+  const [data, setData] = useState(formTemplate)
+
+  const updateFileHandler = (key, value) => {
+    setData((prev) => {
+      return { ...prev, [key]: value };
+    })
+  }
+
+  const formComponents = [<UserForm data={data} updateFileHandler={updateFileHandler} />, <ReviewForm data={data} updateFileHandler={updateFileHandler} />, <Thanks data={data} />];
 
   const {currentStep, currentComponent, changeStep, isLastStep, isFirstStep} = useForm(formComponents)
 
