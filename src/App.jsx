@@ -27,13 +27,13 @@ function App() {
 
   const [data, setData] = useState(formTemplate)
 
-  const updateFileHandler = (key, value) => {
+  const updateFieldHandler = (key, value) => {
     setData((prev) => {
       return { ...prev, [key]: value };
     })
   }
 
-  const formComponents = [<UserForm data={data} updateFileHandler={updateFileHandler} />, <ReviewForm data={data} updateFileHandler={updateFileHandler} />, <Thanks data={data} />];
+  const formComponents = [<UserForm data={data} updateFieldHandler={updateFieldHandler} />, <ReviewForm data={data} updateFieldHandler={updateFieldHandler} />, <Thanks data={data} />];
 
   const {currentStep, currentComponent, changeStep, isLastStep, isFirstStep} = useForm(formComponents)
 
